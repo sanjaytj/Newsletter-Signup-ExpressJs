@@ -12,10 +12,24 @@ app.get("/", function(req, res){
 })
 
 app.post("/", function(req, res){
-    var fname = req.body.fName;
-    var lname = req.body.lName;
-    var email = req.body.email;
-    console.log(fname, lname, email); // use body-parser
+    const fname = req.body.fName;
+    const lname = req.body.lName; // using body-parser
+    const email = req.body.email; // its not to be changed..turn to const
+    
+    const data = {
+        members: [
+            {
+                email_address: email,
+                status: "subscribed",
+                merge_feilds: { // mailchimp..Audiences..Settings..'[MERGE]' tags 
+                    FNAME: firstName,
+                    LNAME: lastName
+                }
+            }
+        ]
+    }; // 10.20 => 249
+
+    var jsonData = JSON.stringify(data); //converts JSON data to string
 })
 
 app.listen(3000, function(req, res){
@@ -31,4 +45,18 @@ app.use(express.static("public"))   == For css
 we are to create a folder called public where we are going to keep all our extra files like css and images 
 
 => Also kindly look into the href in signup.html for relative path change
+
+Mailchimp API Key: 2d5115c1897e85627f536d19c346bba2-us6
+Mailchimp List ID: fa5cbb5f66
+
+JSON Data: ["Email Address","First Name","Last
+Name","Birthday","MEMBER_RATING","OPTIN_TIME","OPTIN_IP","CONFIRM_TIME","CONFIRM_IP","LATITUDE","LONGITUDE","GMTOFF","DSTOFF","TIMEZONE","CC","REGION","LAST_CHANGED","LEID","EUID","NOTES"]
+["gladys.mcvankab@example.com","Gladys","McVankab","",4,"2018-03-15 17:51:42",null,"2018-03-15
+17:51:42","205.201.132.5",null,null,null,null,null,null,null,"2018-03-15 17:51:42",67042739,"77514fa407",null]
+["cat@example.com","Kitty","Cat","",2,"2021-02-23 15:22:16",null,"2021-02-23
+15:22:16","205.201.132.5",null,null,null,null,null,null,null,"2021-02-23 15:22:16",171106435,"52e230f061",null]
+
+https.get(url, function()) .. makes only GET request when we want data from an external server
+
+=> To make a POST request => nodejs.org/api/https.html .. https.request(options, callback)
 */
